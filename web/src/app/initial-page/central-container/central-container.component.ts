@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./central-container.component.scss']
 })
 export class CentralContainerComponent implements OnInit {
-
+  formMode: String;
+  
   constructor() { }
 
   ngOnInit() {
