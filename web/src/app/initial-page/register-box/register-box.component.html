@@ -1,9 +1,9 @@
 <mat-vertical-stepper [linear]="true" #stepper>
     <mat-step [stepControl]="nameGroup">
         <form [formGroup]="nameGroup">
-        <ng-template matStepLabel>Fill out your name.</ng-template>
+        <ng-template matStepLabel>Fill out your full name.</ng-template>
         <mat-form-field [hideRequiredMarker]="true">
-            <input matInput placeholder="Name" formControlName="name" required>
+            <input matInput placeholder="Name and surname" formControlName="name" required>
         </mat-form-field>
         <div>
             <button mat-button matStepperNext>Next</button>
