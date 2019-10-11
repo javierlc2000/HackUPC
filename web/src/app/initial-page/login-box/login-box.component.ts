@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material'
 
 @Component({
   selector: 'app-login-box',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginBoxComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router : Router) { }
+
+  username: string;
+  password: string;
 
   ngOnInit() {
+  }
+
+  login() : void {
   }
 
 }
