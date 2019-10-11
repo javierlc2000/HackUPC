@@ -1,12 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatStepperModule } from '@angular/material/stepper';
+import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +10,11 @@ import { LoginBoxComponent } from './initial-page/login-box/login-box.component'
 import { RegisterBoxComponent } from './initial-page/register-box/register-box.component';
 import { CentralContainerComponent } from './initial-page/central-container/central-container.component';
 import { HeaderComponent } from './initial-page/header/header.component';
+
+import {
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule,
+  MatRadioModule, MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatTabsModule
+} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -32,9 +33,29 @@ import { HeaderComponent } from './initial-page/header/header.component';
     MatCardModule,
     MatRadioModule,
     MatStepperModule,
-    MatTabsModule
+    MatTabsModule,
+    CommonModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatDialogModule,
+    MatTableModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    FormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatInputModule,
+    MatDialogModule,
+    MatTableModule,
+    MatMenuModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
 })
 export class AppModule { }
