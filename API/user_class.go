@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-
 )
 
 type clock struct {
@@ -23,6 +22,17 @@ type lesson struct {
     start_time      clock
     end_time        clock
     feedback        [11]int
+}
+
+type almost_lesson struct {
+    subject         string
+    start_time      clock
+    end_time        clock
+}
+
+func Newalmost_Lesson (l lesson) almost_lesson {
+    _l := almost_lesson {l.subject, l.start_time, l.end_time}
+    return _l
 }
 
 func min_lesson (l1, l2 lesson) lesson {
@@ -79,8 +89,12 @@ type user struct {
 }
 
 func NewUser (username, name, email string, subjects []string) user {
-	var _empty []int
-    u := user {username, name, email, subjects, _empty}
+	var _zeroes []int
+	for _, _ = range subjects{
+		_zeroes = append(_zeroes, 0)
+	}
+
+    u := user {username, name, email, subjects, _zeroes}
     return u
 }
 
@@ -108,53 +122,61 @@ func performset_feedback(u user, pointsstring string, subject_name string) {
 	}
 }
 
-func getInfoUser (u string) (map[string] string, bool) {
+func getInfoUser (u string) (map[string][]string, bool) {
 	_user, err := map_users[u]
 
-	var m map[string]string
+	var m map[string] []string
+	m = make(map[string][]string)
 
-	m["username"] = _user.username
-	m["name"] = _user.name
-	m["email"] = _user.email
-	
-	for i, v := range _user.subjects {
-		m["subject" + string(i)] = v
+
+
+	m["username"] = [] string {_user.username}
+	m["name"] = [] string {_user.name}
+	m["email"] = [] string {_user.email}
+	m["subject"] = _user.subjects
+
+	var feed [] string
+
+
+	for _, v := range _user.feedback {
+		feed = append(feed, strconv.Itoa(v))
 	}
 
-	for i, v := range _user.feedback {
-		m["feedback" + string(i)] = string(v)
-	}
+	m["feedback"] = feed
 
 	return m, err
 }
 
 
-func performSchedule(u user) []lesson {
-    var ans []lesson
-    today := int(time.Now().Weekday()) - 1
+func performSchedule(u user) []almost_lesson {
+    var ans []almost_lesson
+    today := int(time.Now().Weekday()) - 3
     for _, name := range u.subjects {
-        subject := map_subjects[name]
-        x := subject.schedule[today]
-        if x.start_time.hour != -1 {
-            ans = append(ans, x)
+        _subject := map_subjects[name]
+        
+        x := _subject.schedule[today]
+        if x.start_time.hour > 0 {
+            ans = append(ans, Newalmost_Lesson(x))
         }
     }
+
     sort.Slice(ans, func(i, j int) bool {
         x := ans[i].start_time
         y := ans[j].start_time
         return less(x, y)
         })
+
     return ans
 }
 
 
-func set_feedback(w http.ResponseWriter, req *http.Request) {
+func setfeedback(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	
-	performset_feedback(map_users[req.Form["username"][0]], req.Form["points"][0], req.Form["subject_name"][0])
+	performset_feedback(map_users[req.Form["username"][0]], req.Form["points"][0], req.Form["subjectName"][0])
 
 	var m map[string]string
+	m  = make(map[string]string)
 
 	m["result"] = "true"
 	value, _ := json.Marshal(m)
@@ -168,10 +190,23 @@ func schedule(w http.ResponseWriter, req *http.Request) {
 
 	result := performSchedule(map_users[req.Form["username"][0]])
 
-	var m map[string]lesson
-	for i, v := range result {
-		m[string(i)] = v
+	var _subject []string
+	var _start_time []string
+	var _end_time []string
+	 
+	for _, val := range result {
+		_subject = append(_subject, val.subject)
+		_start_time = append(_start_time, strconv.Itoa(val.start_time.hour) + ":" + strconv.Itoa(val.start_time.min))
+		_end_time = append(_end_time, strconv.Itoa(val.end_time.hour) + ":" + strconv.Itoa(val.end_time.min))
 	}
+
+
+	var m map[string] []string
+	m  = make(map[string] []string)
+
+	m["subject"] = _subject
+	m["start_time"] = _start_time
+	m["end_time"] = _end_time
 
 	value, _ := json.Marshal(m)
 
@@ -194,7 +229,7 @@ func infouser(w http.ResponseWriter, req *http.Request) {
 
 // SetupHandlers initiates the servers HTTP endpoints
 func SetupHandlers() {
-	http.HandleFunc("/set_feedback", set_feedback)
+	http.HandleFunc("/setfeedback", setfeedback)
 	http.HandleFunc("/schedule", schedule)
 	http.HandleFunc("/infouser", infouser)
 	http.ListenAndServe(":8080", nil)
@@ -205,19 +240,19 @@ func init_everything () error {
 	map_subjects = make (map[string]subject)
 	map_users = make (map[string]user)
 
-	filesUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
 	defer filesUsernames.Close()
 
-	filesNames, err := os.OpenFile("data/names.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesNames, err := os.OpenFile("names.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
 	defer filesNames.Close()
 
-	filesEmails, err := os.OpenFile("data/emails.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesEmails, err := os.OpenFile("emails.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -241,7 +276,7 @@ func init_everything () error {
 	}
 
 	
-	filesAssignments, err := os.OpenFile("data/Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesAssignments, err := os.OpenFile("Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -256,10 +291,11 @@ func init_everything () error {
 
 		temp_user := map_users[_username] //EOOO
 		temp_user.subjects = append(temp_user.subjects, _assignment)
+		temp_user.feedback = append(temp_user.feedback, 0)
 		map_users[_username] = temp_user
 	}
 
-	filesSubject, err := os.OpenFile("data/subject.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesSubject, err := os.OpenFile("subject.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -277,7 +313,7 @@ func init_everything () error {
 	}
 
 	
-	filesSchedules, err := os.OpenFile("data/schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesSchedules, err := os.OpenFile("schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -319,9 +355,6 @@ func init_everything () error {
 
 func main() {
 	init_everything()
-
-	//fmt.Println(map_users["Javier"])
-
 	SetupHandlers()
 }
 
