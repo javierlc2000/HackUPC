@@ -22,22 +22,22 @@
 */
 
 .aux-card {
-  background-color: background;
+  background-color: rgba(133,151,255,0.4);
 }
 
+
 .middle-card {
-  background-color: warn;
+  background-color: rgba(133,151,255,0.4);
 }
 
 .middle-card:hover {
-  background-color: rgba(yellow,1);
-  filter: invert(10%);
+  background-color: rgba(133,151,255,0.7);
 }
 
 .aux-card:hover {
-  background-color: rgba(yellow,1);
-  filter: invert(10%);
+  background-color: rgba(133,151,255,0.7);
 }
+
 
 .mat-slider-horizontal {
   width: 100%;
@@ -46,10 +46,14 @@
 .mat-icon-button {
   &[position='right'] {
       position: relative;
-      left: 35%;
+      left: 30%;
   }
   &[position='left'] {
       position: relative;
-      left: 5%;
+      left: 3%;
+  }
+  &[position='center'] {
+      position: relative;
+      left: 50%;
   }
 }

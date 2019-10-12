@@ -1,14 +1,19 @@
 <table style="width:90%">
     <tr>
+        <button mat-icon-button position="center" aria-label="Expand less icon-button">
+            <mat-icon>expand_less</mat-icon>
+        </button>
+    </tr>
+    <tr>
         <mat-card class="aux-card top">
             <mat-card-header>
-                <mat-card-title >Super Previous Class</mat-card-title>
+                <mat-card-title>Previous Class</mat-card-title>
             </mat-card-header>
             <mat-card-actions>
-                <button mat-icon-button position="left" color="accent" aria-label="Star icon-button">
+                <button mat-icon-button position="left" color="primary" aria-label="Star icon-button">
                     <mat-icon>star</mat-icon> Change your rating
                 </button>
-                <button mat-icon-button position="right" color="accent" aria-label="Person icon-button">
+                <button mat-icon-button position="right" color="primary" aria-label="Person icon-button">
                     <mat-icon>emoji_people</mat-icon> Volunteer to help your classmates
                 </button>
             </mat-card-actions>
@@ -18,27 +23,35 @@
     <tr>
         <mat-card class="middle-card">
             <mat-card-header>
-                <mat-card-title>Previous Class</mat-card-title>
+                <mat-card-title>Current Class</mat-card-title>
             </mat-card-header>
+            <!--
             <mat-card-actions position="top-right">
 
-                <button mat-icon-button color="accent" aria-label="Cross icon-button">
+                <button mat-icon-button color="primary" aria-label="Cross icon-button">
                     <mat-icon>cancel</mat-icon>
                 </button>
             </mat-card-actions>
+            -->
             <mat-slider
               class="card-slider"
               max="10"
               min="0"
               thumbLabel
+              color="primary"
             ></mat-slider>
         </mat-card>
     </tr>
     <tr>
         <mat-card class="aux-card">
             <mat-card-header>
-                <mat-card-title>Current Class</mat-card-title>
+                <mat-card-title>Next Class</mat-card-title>
             </mat-card-header>
         </mat-card>
+    </tr>
+    <tr>
+      <button mat-icon-button position="center" aria-label="Expand more icon-button">
+          <mat-icon>expand_more</mat-icon>
+      </button>
     </tr>
 </table>
