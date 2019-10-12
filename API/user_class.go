@@ -1,7 +1,7 @@
 package main
 
 import (
-    "fmt"
+    //"fmt"
     "time"
     "sort"
     "bufio"
@@ -240,19 +240,19 @@ func init_everything () error {
 	map_subjects = make (map[string]subject)
 	map_users = make (map[string]user)
 
-	filesUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
 	defer filesUsernames.Close()
 
-	filesNames, err := os.OpenFile("names.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesNames, err := os.OpenFile("data/names.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
 	defer filesNames.Close()
 
-	filesEmails, err := os.OpenFile("emails.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesEmails, err := os.OpenFile("data/emails.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -276,7 +276,7 @@ func init_everything () error {
 	}
 
 	
-	filesAssignments, err := os.OpenFile("Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesAssignments, err := os.OpenFile("data/Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -295,7 +295,7 @@ func init_everything () error {
 		map_users[_username] = temp_user
 	}
 
-	filesSubject, err := os.OpenFile("subject.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesSubject, err := os.OpenFile("data/subject.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
@@ -313,7 +313,7 @@ func init_everything () error {
 	}
 
 	
-	filesSchedules, err := os.OpenFile("schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filesSchedules, err := os.OpenFile("data/schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
 	}
