@@ -40,11 +40,12 @@ export class RegisterBoxComponent implements OnInit {
     const _username = this.usernameGroup.get("username").value;
     const _password = this.passwordGroup.get("password").value;
     
+    var _this = this;
     this.logger.register(_name, _email, _username, _password)
     .subscribe({
       next(data: SuccessMessage) {
         if (data.success) {
-          this.router.navigateByUrl("/user");
+          _this.router.navigateByUrl("/user");
         }
       }
     });

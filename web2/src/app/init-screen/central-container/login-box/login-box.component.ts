@@ -11,8 +11,8 @@ import { HTTPLoginService, SuccessMessage } from '../httplogin.service';
   styleUrls: ['./login-box.component.scss']
 })
 export class LoginBoxComponent implements OnInit {
-  succ = false;
   loginInfo: FormGroup;
+  errMsg = false;
   
   constructor(
     private logger: HTTPLoginService,
@@ -29,12 +29,16 @@ export class LoginBoxComponent implements OnInit {
     const _username = this.loginInfo.get("username").value;
     const _password = this.loginInfo.get("password").value;
     
+    const _this = this;
     this.logger.login(_username, _password)
     .subscribe(
       data => {
-        this.succ = data.success;
+        if (data.success) {
+          _this.router.navigateByUrl("/user");
+        }
+        else {
+          _this.errMsg = true;
+        }
       });
-    
-    if (this.succ) this.router.navigateByUrl("/user");
   }
 }

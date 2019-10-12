@@ -18,6 +18,7 @@
                 </tr>
             </table>
         </form>
+        <mat-error *ngIf="errMsg">Invalid credentials.</mat-error>
         <mat-spinner [style.display]="showSpinner ? 'block' : 'none'"></mat-spinner>
     </mat-card-content>
     <mat-card-actions class="buttons">
