@@ -12,10 +12,10 @@ import { AppComponent } from './app.component';
 import { LoginBoxComponent } from './initial-page/login-box/login-box.component';
 import { RegisterBoxComponent } from './initial-page/register-box/register-box.component';
 import { CentralContainerComponent } from './initial-page/central-container/central-container.component';
-import { HeaderComponent } from './initial-page/header/header.component';
 import { ScrollAppComponent } from './scroll-page/scroll-app.component';
 import { ScrollComponent } from './scroll-page/scroll/scroll.component';
 import { ScrollEmbedderComponent } from './scroll-page/scroll-embedder/scroll-embedder.component';
+import { HeaderComponent } from './scroll-page/header/header.component';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule, MatSliderModule,
@@ -33,8 +33,8 @@ import {
     ScrollEmbedderComponent,
     ScrollAppComponent,
     ScrollAppComponent,
-    InitialAppComponent
-  ],
+    InitialAppComponent,
+ ],
   imports: [
     BrowserModule,
     AppRoutingModule, HttpClientModule,
