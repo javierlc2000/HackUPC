@@ -26,8 +26,16 @@ func NewClock(hour, min int) clock {
   return t
 }
 
-func leq(a, b *clock) bool {
+func less(a, b *clock) bool {
   return (a.hour < b.hour) || (a.hour == b.hour && a.min < b.min)
+}
+
+func greater(a, b *clock) bool {
+  return less(b, a)
+}
+
+func leq(a, b *clock) bool {
+  return less(a, b) || a == b
 }
 
 func geq(a, b *clock) bool {
@@ -88,8 +96,7 @@ func nextLesson(u user) lesson {
 }
 
 // updates past lessons of the current day
-/*
-func update_past_lessons(u user) user {
+/*func update_past_lessons(u user) user {
   var today = int(time.Now().Weekday())-1
   hour, min, _ := time.Now().Clock()
   var last_time clock
@@ -101,13 +108,13 @@ func update_past_lessons(u user) user {
     last_time = last_lesson.start_time
   }
   for _, name := range u.subjects {
-    subject = list_subjects[name]
-    if subject.schedule[today] {
-      if subject.start_time[today] < last_time
+    subject, ok = list_subjects[name]
+    if ok && subject.schedule[today] {
+      if(leq)
     }
   }
-}
-*/
+}*/
+
 func main() {
   map_subjects = make(map[string]subject)
   var list_subjects []subject
