@@ -100,12 +100,9 @@ func performLogin(username, password string) (bool, error) {
 }
 
 func login(w http.ResponseWriter, req *http.Request) {
-	body, _ := ioutil.ReadAll(req.Body)
+	req.ParseForm()
 
-	var msg LoginRequest
-	_ = json.Unmarshal(body, &msg)
-
-	succ, err := performLogin(msg.Username, msg.Password)
+	succ, err := performLogin(req.Form["username"], req.Form["password"])
 	value, _ := json.Marshal(map[string]interface{}{
 		"success": succ,
 		"error":   err.Error(),
@@ -116,12 +113,9 @@ func login(w http.ResponseWriter, req *http.Request) {
 }
 
 func register(w http.ResponseWriter, req *http.Request) {
-	body, _ := ioutil.ReadAll(req.Body)
+	req.ParseForm()
 
-	var msg RegisterRequest
-	_ = json.Unmarshal(body, &msg)
-
-	succ, err := performRegister(msg.Name, msg.Email, msg.Username, msg.Password)
+	succ, err := performLogin(req.Form["name"], req.Form["email"], req.Form["username"], req.Form["password"])
 	value, _ := json.Marshal(map[string]interface{}{
 		"success": succ,
 		"error":   err.Error(),
