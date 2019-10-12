@@ -12,8 +12,8 @@ import { LoginBoxComponent } from './initial-page/login-box/login-box.component'
 import { RegisterBoxComponent } from './initial-page/register-box/register-box.component';
 import { CentralContainerComponent } from './initial-page/central-container/central-container.component';
 import { HeaderComponent } from './initial-page/header/header.component';
-import { ScrollComponent } from './experimental-page/scroll/scroll.component';
-import { ScrollEmbedderComponent } from './experimental-page/scroll-embedder/scroll-embedder.component';
+import { ScrollComponent } from './scroll-page/scroll/scroll.component';
+import { ScrollEmbedderComponent } from './scroll-page/scroll-embedder/scroll-embedder.component';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule, MatSliderModule,
