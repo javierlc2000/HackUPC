@@ -11,5 +11,4 @@ export class InitScreenComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
