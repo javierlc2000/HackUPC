@@ -1,7 +1,7 @@
 package main
 
 import (
-  //"fmt"
+  "fmt"
   "time"
 )
 
@@ -26,6 +26,14 @@ func NewClock(hour, min int) clock {
   return t
 }
 
+func leq(a, b *clock) bool {
+  return (a.hour < b.hour) || (a.hour == b.hour && a.min < b.min)
+}
+
+func geq(a, b *clock) bool {
+  return leq(b, a)
+}
+
 type subject struct {
   name string
   teacher string
@@ -39,7 +47,7 @@ func NewSubject (name, teacher string, schedule [7] bool, start_time, end_time [
   return s
 }
 
-var list_subjects map[string]subject
+var map_subjects map[string]subject
 
 type user struct {
   name string
@@ -53,27 +61,36 @@ func NewUser (name string, subjects []string, past_lessons []lesson) user {
 }
 
 func nextLesson(u user) lesson {
-  var today = int(time.Now().Weekday())
+  var today = int(time.Now().Weekday())-1
+  next_subject := ""
+  min_time := NewClock(99, 99)
   hour, min, _ := time.Now().Clock()
-  var next_subject string
+  current_time := NewClock(hour, min)
   for _, name := range u.subjects {
-    subject := list_subjects[name]
-    if subject.schedule[today] {
-      if (subject.end_time[today].hour > hour) || (subject.end_time[today].hour == hour && subject.end_time[today].min >= min) {
-           hour = subject.end_time[today].hour
-           min = subject.end_time[today].min
-           next_subject = subject.name
+    subject, ok := map_subjects[name]
+    if ok {
+      if subject.schedule[today] {
+        if (geq(&subject.end_time[today], &current_time)) {
+             if(leq(&subject.start_time[today], &min_time)) {
+               min_time = subject.start_time[today]
+               next_subject = subject.name
+             }
+        }
       }
     }
   }
-  subject := list_subjects[next_subject]
+  if next_subject == "" {
+    return NewLesson("fail", NewClock(-1, -1), NewClock(-1, -1))
+  }
+  subject := map_subjects[next_subject]
   var ans = NewLesson(subject.name, subject.start_time[today], subject.end_time[today])
   return ans
 }
 
 // updates past lessons of the current day
+/*
 func update_past_lessons(u user) user {
-  var today = int(time.Now().Weekday())
+  var today = int(time.Now().Weekday())-1
   hour, min, _ := time.Now().Clock()
   var last_time clock
   if len(u.past_lessons) == 0 {
@@ -90,7 +107,23 @@ func update_past_lessons(u user) user {
     }
   }
 }
-
+*/
 func main() {
-
+  map_subjects = make(map[string]subject)
+  var list_subjects []subject
+  algebra := NewSubject("algebra", "Casanellas",
+              [7]bool{true, true, true, true, true, true, false},
+              [7]clock{{8, 0}, {8, 0}, {8, 0}, {8, 0}, {8, 0}, {11, 0}, {-1, -1}},
+              [7]clock{{9, 0}, {9, 0}, {9, 0}, {9, 0}, {9, 0}, {11, 30}, {-1, -1}})
+  list_subjects = append(list_subjects, algebra)
+  map_subjects["algebra"] = algebra
+  calcul := NewSubject("calcul", "Noy",
+              [7]bool{true, false, true, false, true, true, false},
+              [7]clock{{10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {11, 30}, {-1, -1}},
+              [7]clock{{11, 0}, {11, 0}, {11, 0}, {11, 0}, {11, 0}, {12, 30}, {-1, -1}})
+  list_subjects = append(list_subjects, calcul)
+  map_subjects["calcul"] = calcul
+  u1 := NewUser("Max", []string{"algebra", "calcul", "io"}, []lesson{})
+  fmt.Println(u1.name)
+  fmt.Println(nextLesson(u1))
 }
