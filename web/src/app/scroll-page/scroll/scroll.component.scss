@@ -22,20 +22,18 @@
 */
 
 .aux-card {
-  background-color: background;
+  background-color: "background";
 }
 
 .middle-card {
-  background-color: warn;
+  background-color: "background";
 }
 
 .middle-card:hover {
-  background-color: rgba(yellow,1);
   filter: invert(10%);
 }
 
 .aux-card:hover {
-  background-color: rgba(yellow,1);
   filter: invert(10%);
 }
 
@@ -46,10 +44,10 @@
 .mat-icon-button {
   &[position='right'] {
       position: relative;
-      left: 35%;
+      left: 30%;
   }
   &[position='left'] {
       position: relative;
-      left: 5%;
+      left: 3%;
   }
 }
