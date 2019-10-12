@@ -221,9 +221,15 @@ func performset_feedback(u user, pointsstring string, subject_name string) {
 	points, _ := strconv.Atoi(pointsstring)
 
 	today := (int(time.Now().Weekday()) + 6) % 7
-	for _, x := range u.subjects {
+	//today = 3
+
+	for i, x := range u.subjects {
 		_subj := map_subjects[x]
+		//fmt.Println("subj, ", _subj)
 		if _subj.schedule[today].start_time.hour > 0 {
+			u.feedback[i] = points
+			//fmt.Println("now u , ", u)
+
 		    if x == subject_name {
 		    	for j, y := range map_subjects {
 		            if y.name == subject_name {
@@ -346,8 +352,8 @@ func getaverage (subject_name string) float64{
 	den := float64(count)
 	num := float64(sum)
 
-	fmt.Println(den)
-	fmt.Println(num)
+	//fmt.Println(den)
+	//fmt.Println(num)
 
 	if sum == 0 {
 		return 0
@@ -370,7 +376,6 @@ func average(w http.ResponseWriter, req *http.Request) {
 	m["result"] = strconv.FormatFloat(result, 'f', 6, 64)
 
 	value, _ := json.Marshal(m)
-
 
 
 	w.Header().Set("content-type", "application/json")
@@ -521,7 +526,7 @@ func init_everything () error {
 
 func main() {
 	init_everything()
+
+
 	SetupHandlers()
 }
-
-
