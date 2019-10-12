@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { SuccessMessage } from '../login-box/login-box.component'
 
 @Component({
   selector: 'app-register-box',
   templateUrl: './register-box.component.html',
-  styleUrls: ['./register-box.component.scss'],
+  styleUrls: ['./register-box.component.scss']
 })
 export class RegisterBoxComponent implements OnInit {
   nameGroup: FormGroup;
@@ -16,8 +14,7 @@ export class RegisterBoxComponent implements OnInit {
   passwordGroup: FormGroup;
 
   constructor(private _formBuilder: FormBuilder,
-    private http: HttpClient,
-    private router: Router) {}
+    private http: HttpClient) {}
 
   ngOnInit() {
     this.nameGroup = this._formBuilder.group({
@@ -47,12 +44,6 @@ export class RegisterBoxComponent implements OnInit {
         username: _username,
         password: _password,
       }
-    }).subscribe({
-      next(data: SuccessMessage) {
-        if (data.success) {
-          this.router.navigateByUrl("/user");
-        }
-      }
-    });
+    }).subscribe();
   }
 }

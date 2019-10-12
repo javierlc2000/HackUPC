@@ -16,6 +16,7 @@ import { ScrollAppComponent } from './scroll-page/scroll-app.component';
 import { ScrollComponent } from './scroll-page/scroll/scroll.component';
 import { ScrollEmbedderComponent } from './scroll-page/scroll-embedder/scroll-embedder.component';
 import { HeaderComponent } from './scroll-page/header/header.component';
+import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './scroll-page/header/dialog-data-example/dialog-data-example.component';
 
 import {
   MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule, MatSliderModule,
@@ -34,6 +35,8 @@ import {
     ScrollAppComponent,
     ScrollAppComponent,
     InitialAppComponent,
+    DialogDataExampleComponent,
+    DialogDataExampleComponentDialog
  ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import {
     MatTableModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -69,6 +73,10 @@ import {
     MatIconModule,
     MatProgressSpinnerModule,
     MatSliderModule
+  ],
+  entryComponents: [
+    DialogDataExampleComponent,
+    DialogDataExampleComponentDialog
   ],
 })
 export class AppModule { }
