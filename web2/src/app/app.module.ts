@@ -21,6 +21,7 @@ import {
 
 import { HttpClientModule } from '@angular/common/http';
 import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './user-screen/header/dialog-data-example/dialog-data-example.component';
+import { ScrollCardComponent } from './user-screen/scroll-embedder/scroll/scroll-card/scroll-card.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './
     ScrollComponent,
     LoginBoxComponent,
     RegisterBoxComponent,
-    DialogDataExampleComponent, DialogDataExampleComponentDialog
+    DialogDataExampleComponent, DialogDataExampleComponentDialog, ScrollCardComponent
   ],
   imports: [
     BrowserModule,

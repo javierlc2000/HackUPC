@@ -22,47 +22,6 @@
   padding: 0 8px;
 }
 
-.right-span {
-  float: right;
-}
-
-.left-span {
-  float: left;
-}
-
-.container {
-  height: auto;
-  overflow: hidden;
-}
-
-
-.middle-title {
-
-}
-
-.aux-card {
-  background-color: rgba(133,151,255,0.4);
-}
-
-
-.middle-card {
-  background-color: rgba(133,151,255,0.4);
-}
-
-.middle-card:hover {
-  background-color: rgba(133,151,255,0.7);
-}
-
-.aux-card:hover {
-  background-color: rgba(133,151,255,0.7);
-}
-
-
-.mat-slider-horizontal {
-  width: 100%;
-}
-
-
 .mat-icon-button {
   &[position='right'] {
       position: relative;
