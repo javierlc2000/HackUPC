@@ -1,64 +1,51 @@
 <table style="width:100%">
     <tr>
-        <button mat-icon-button position="center" aria-label="Expand less icon-button">
+        <button [disabled]="it <= 0" (click)="expandLess()" mat-icon-button position="center" aria-label="Expand less icon-button">
             <mat-icon>expand_less</mat-icon>
         </button>
     </tr>
-    <tr>
-        <mat-card class="aux-card top">
-            <mat-card-header>
-                <mat-card-title>Previous Class</mat-card-title>
-            </mat-card-header>
-            <mat-card-actions>
-                <div class="container">
-                    <span class="left-span">
-                        <button mat-icon-button  color="primary" aria-label="Star icon-button">
-                            <mat-icon class="icon-small">star</mat-icon>
-                    </button>
-                    <span class="vertical">Change your rating</span>
-                    </span>
-                    <span class="right-span">
-                        <button mat-icon-button  color="primary" aria-label="Person icon-button">
-                            <mat-icon class="icon-small">emoji_people</mat-icon>
-                        </button>
-                        <span class="vertical">Volunteer to help your classmates</span>
-                    </span>
-                </div>
-            </mat-card-actions>
-        </mat-card>
-    </tr>
+    
+    <ng-container *ngFor="let i of ITER;">
+        <tr>
+            <ng-container *ngIf="it <= i && i < it+3">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ cards[i] }}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-actions *ngIf="votes[i]!=0">
+                        <div class="container">
+                            <span class="left-span">
+                                <button (click)="revote(i)" mat-icon-button  color="primary" aria-label="Star icon-button">
+                                    <mat-icon class="icon-small">star</mat-icon>
+                                </button>
+                            <span class="vertical">Change your rating</span>
+                            </span>
+                            <span class="right-span">
+                                <button mat-icon-button  color="primary" aria-label="Person icon-button">
+                                    <mat-icon class="icon-small">emoji_people</mat-icon>
+                                </button>
+                                <span class="vertical">Volunteer to help your classmates</span>
+                            </span>
+                        </div>
+                    </mat-card-actions>
+                    <mat-card-actions *ngIf="votes[i]==0">        
+                        <mat-slider 
+                            (input)="pitch(i, $event)"
+                            class="card-slider"
+                            max="10"
+                            min="1"
+                            thumbLabel
+                            color="primary"
+                        ></mat-slider>
+                        <button (click)="vote(i)" class="vote-button" mat-raised-button color="primary"> Vote </button>
+                    </mat-card-actions>
+                </mat-card>
+            </ng-container>
+        </tr>
+    </ng-container>
 
     <tr>
-        <mat-card class="middle-card">
-            <mat-card-header>
-                <mat-card-title class="middle-title">Current Class</mat-card-title>
-            </mat-card-header>
-            <!--
-            <mat-card-actions position="top-right">
-
-                <button mat-icon-button color="primary" aria-label="Cross icon-button">
-                    <mat-icon>cancel</mat-icon>
-                </button>
-            </mat-card-actions>
-            -->
-            <mat-slider 
-            class="card-slider"
-              max="10"
-              min="1"
-              thumbLabel
-              color="primary"
-            ></mat-slider>
-        </mat-card>
-    </tr>
-    <tr>
-        <mat-card class="aux-card">
-            <mat-card-header>
-                <mat-card-title>Next Class</mat-card-title>
-            </mat-card-header>
-        </mat-card>
-    </tr>
-    <tr>
-      <button mat-icon-button position="center" aria-label="Expand more icon-button">
+      <button [disabled]="it+3 >= n"(click)="expandMore()" mat-icon-button position="center" aria-label="Expand more icon-button">
           <mat-icon>expand_more</mat-icon>
       </button>
     </tr>

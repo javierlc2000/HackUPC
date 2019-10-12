@@ -1,18 +1,20 @@
+M.Balsells
+Databases
+M.Balsells
+Statistics and Probability II
+M.Balsells
+Information Theory
+M.Balsells
+Algorithmics and Programming III
+M.Balsells
+Signals and Systems
+M.Balsells
+Integral Calculus
 Javier
 A
 Javier
 PM
-Max
-BD
-Max
-PIE2
-Max
-TEOI 
-Max
-AP3
-Max
-SIS
-Javier 
+Javier
 MAG
 Javier
 Physics
@@ -30,4 +32,3 @@ Maria
 Physics
 Maria
 PRO2
- 

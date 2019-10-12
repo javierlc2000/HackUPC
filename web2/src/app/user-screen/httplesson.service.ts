@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-/*
+
 export interface ScheduleResponse {
-  error: string;
-  success: boolean;
+  end_time: string[];
+  start_time: string[];
+  subject: string[];
 }
-*/
 
 export interface InfoUserResponse {
   username: string;
@@ -26,14 +26,13 @@ export interface FeedbackResponse {
 export class HTTPLessonService {
   constructor(private http: HttpClient) {}
 
-  /*schedule(_username: string): Observable<SuccessMessage> {
-    return this.http.get<SuccessMessage>('http://localhost:8080/login', {
+  schedule(_username: string): Observable<ScheduleResponse> {
+    return this.http.get<ScheduleResponse>('http://localhost:8080/schedule', {
       params: {
         username: _username,
-        password: _password,
       }
     });
-  }*/
+  }
 
   infoUser(_username: string): Observable<InfoUserResponse> {
     return this.http.get<InfoUserResponse>('http://localhost:8080/infouser', {

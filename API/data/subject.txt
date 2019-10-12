@@ -1,20 +1,20 @@
-BD
-Toni
-PIE2
-Oriol
+Databases
+Antoni Urpi
+Statistics and Probability II
+Oriol Serra
 A
-Salvador
-AP3
-Albert
+Salvador Roura
+Algorithmics and Programming III
+Albert Oliveras
 CA1
 Toni
 CA2
 Jaume
-SIS
-Olga
-TEOI
+Signals and Systems
+Olga Munoz
+Information Theory
 Jordi Quer
-CI
+Integral Calculus
 Andres Encinas
 Physics
 Quim Truyas
@@ -24,4 +24,3 @@ MAG
 Pere Pascual
 PM
 Francisco Heredia
-
