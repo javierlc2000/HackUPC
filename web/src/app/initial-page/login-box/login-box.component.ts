@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material'
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-box',
@@ -8,16 +8,17 @@ import { MatDialog } from '@angular/material'
   styleUrls: ['./login-box.component.scss']
 })
 export class LoginBoxComponent implements OnInit {
+  loginInfo: FormGroup;
 
   constructor(private router : Router) { }
 
-  username: string;
-  password: string;
-
   ngOnInit() {
+    this.loginInfo = new FormGroup({
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+    });
   }
 
-  login() : void {
+  login() {
   }
-
 }
