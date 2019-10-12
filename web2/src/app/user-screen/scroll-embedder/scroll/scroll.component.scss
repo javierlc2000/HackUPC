@@ -23,14 +23,18 @@
 }
 
 .right-span {
-  position: relative;
-  right: -30%;
+  float: right;
 }
 
 .left-span {
-  position: relative;
-  right: -1%;
+  float: left;
 }
+
+.container {
+  height: auto;
+  overflow: hidden;
+}
+
 
 .middle-title {
 
