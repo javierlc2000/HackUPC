@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -7,15 +7,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() username: string;
+  username = "";
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private actRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    this.username = this.actRoute.snapshot.paramMap.get("username");
   }
 
-  exitClicked() {
-    this.router.navigateByUrl("");
+  feedbackClicked() {
+    this.router.navigateByUrl('/feedback/' + this.username);
+  }
+
+  communityClicked() {
+    this.router.navigateByUrl('/community/' + this.username);
   }
 
 }
