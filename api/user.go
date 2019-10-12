@@ -1,5 +1,6 @@
 package main
 
+/*
 import (
   //"fmt"
   "time"
@@ -73,3 +74,4 @@ func NextLesson(student user) lesson {
 func main() {
 
 }
+*/

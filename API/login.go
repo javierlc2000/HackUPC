@@ -1,111 +1,140 @@
 package main
 
 import (
-    //"fmt"
-    "os"
-    "bufio"
-    "encoding/json"
-	"net/http"
+	"bufio"
+	"encoding/json"
+	"errors"
 	"io/ioutil"
+	"net/http"
+	"os"
 )
 
-type Answer struct {
-    word string
-    value int
+// type of /login HTTP request
+type LoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
-// given a file (named file_name) and a text, inserts the text in the file with end of line
-func add (file_name, text string) {
-	file, _ := os.OpenFile(file_name, os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
+// type of /register HTTP request
+type RegisterRequest struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// given a file (named fileName) and a text, inserts the text in the file with end of line
+func add(fileName, text string) error {
+	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
 	if _, err := file.WriteString(text + "\n"); err != nil {
-	    panic(err)
+		return err
 	}
 	defer file.Close()
+	return nil
 }
 
-func perform_register (name, username, password, email string) bool {
-	file_usernames, _ := os.OpenFile("usernames.txt", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-	defer file_usernames.Close()
+func performRegister(name, email, username, password string) (bool, error) {
+	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return false, err
+	}
+	defer fileUsernames.Close()
 
-    scanner := bufio.NewScanner(file_usernames)
-    for scanner.Scan() { // cheks that the username is not taken       
-        if scanner.Text() == username {
-        	return false
-        }
-    }
+	scanner := bufio.NewScanner(fileUsernames)
+	for scanner.Scan() { // cheks that the username is not taken
+		if scanner.Text() == username {
+			return false, errors.New("username is already being used")
+		}
+	}
 
-    //add all the information
-    add("usernames.txt", username)
-    add("names.txt", name)
-    add("passwords.txt", password)
-    add("emails.txt", email)
+	//add all the information
+	err = add("data/usernames.txt", username)
+	if err != nil {
+		return false, err
+	}
+	err = add("data/names.txt", name)
+	if err != nil {
+		return false, err
+	}
+	err = add("data/passwords.txt", password)
+	if err != nil {
+		return false, err
+	}
+	err = add("data/emails.txt", email)
+	if err != nil {
+		return false, err
+	}
 
-    return true
+	return true, nil
 }
 
-func perform_login (username, password string) bool {
-	file_usernames, _ := os.OpenFile("usernames.txt", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-	defer file_usernames.Close()
+func performLogin(username, password string) (bool, error) {
+	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return false, err
+	}
+	defer fileUsernames.Close()
 
-	file_passwords, _ := os.OpenFile("passwords.txt", os.O_RDWR | os.O_CREATE | os.O_APPEND, 0666)
-	defer file_passwords.Close()  
+	filePasswords, err := os.OpenFile("data/passwords.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		return false, err
+	}
+	defer filePasswords.Close()
 
-    // cheks that the username exists and that its password is correct      
-    scanner_usernames := bufio.NewScanner(file_usernames)
-    scanner_passwords := bufio.NewScanner(file_passwords)
+	// cheks that the username exists and that its password is correct
+	scannerUsernames := bufio.NewScanner(fileUsernames)
+	scannerPasswords := bufio.NewScanner(filePasswords)
 
-    for scanner_usernames.Scan() {
-    	password := scanner_passwords.Text()
+	for scannerUsernames.Scan() {
+		password := scannerPasswords.Text()
 
-        if scanner_usernames.Text() == username {
-        	return password == password
-        }
-    }
-    
-    return false
-}
+		if scannerUsernames.Text() == username {
+			return password == password, nil
+		}
+	}
 
-type RequestData1 struct {
-    Username string `json:"username"`
-    Password string `json:"password"`
-}
-
-type RequestData2 struct {
-    Name string `json:"name"`
-    Email string `json:"email"`
-    Username string `json:"username"`
-    Password string `json:"password"`
+	return false, errors.New("user not registered")
 }
 
 func login(w http.ResponseWriter, req *http.Request) {
-	body1, _ := ioutil.ReadAll(req.Body)
-	
-	var msg RequestData1
-	_ = json.Unmarshal(body1, &msg)
+	body, _ := ioutil.ReadAll(req.Body)
 
-    value, _ := json.Marshal(perform_login(msg.Username, msg.Password))
+	var msg LoginRequest
+	_ = json.Unmarshal(body, &msg)
+
+	succ, err := performLogin(msg.Username, msg.Password)
+	value, _ := json.Marshal(map[string]interface{}{
+		"success": succ,
+		"error":   err.Error(),
+	})
 
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
 
-
 func register(w http.ResponseWriter, req *http.Request) {
-    body1, _ := ioutil.ReadAll(req.Body)
-    
-    var msg RequestData2
-    _ = json.Unmarshal(body1, &msg)
+	body, _ := ioutil.ReadAll(req.Body)
 
-    value, _ := json.Marshal(msg.Name)
+	var msg RegisterRequest
+	_ = json.Unmarshal(body, &msg)
 
-    w.Header().Set("content-type", "application/json")
-    w.Write(value)
+	succ, err := performRegister(msg.Name, msg.Email, msg.Username, msg.Password)
+	value, _ := json.Marshal(map[string]interface{}{
+		"success": succ,
+		"error":   err.Error(),
+	})
+
+	w.Header().Set("content-type", "application/json")
+	w.Write(value)
 }
 
 // SetupHandlers initiates the servers HTTP endpoints
 func SetupHandlers() {
 	http.HandleFunc("/login", login)
-    http.HandleFunc("/register", register)
+	http.HandleFunc("/register", register)
 	http.ListenAndServe(":8080", nil)
 }
 
