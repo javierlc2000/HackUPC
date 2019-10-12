@@ -22,20 +22,22 @@
 */
 
 .aux-card {
-  background-color: "background";
+  background-color: rgba(133,151,255,0.4);
 }
 
+
 .middle-card {
-  background-color: "background";
+  background-color: rgba(133,151,255,0.4);
 }
 
 .middle-card:hover {
-  filter: invert(10%);
+  background-color: rgba(133,151,255,0.7);
 }
 
 .aux-card:hover {
-  filter: invert(10%);
+  background-color: rgba(133,151,255,0.7);
 }
+
 
 .mat-slider-horizontal {
   width: 100%;
