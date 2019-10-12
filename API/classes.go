@@ -3,6 +3,7 @@ package main
 import (
     "fmt"
     "time"
+    "sort"
 )
 
 type clock struct {
@@ -89,6 +90,11 @@ func daily_schedule(u user) []lesson {
             ans = append(ans, x)
         }
     }
+    sort.Slice(ans, func(i, j int) bool {
+        x := ans[i].start_time
+        y := ans[j].start_time
+        return less(x, y)
+        })
     return ans
 }
 
@@ -135,22 +141,32 @@ func update_past_lessons(u user) user {
 
 
 func main() {
-    map_subjects = make(map[string]subject)
-  //  var list_subjects []subject
-    /*algebra := NewSubject("algebra", "Casanellas",
-                            [7]bool{true, true, true, true, true, true, false},
-                            [7]clock{{8, 0}, {8, 0}, {8, 0}, {8, 0}, {8, 0}, {11, 0}, {-1, -1}},
-                            [7]clock{{9, 0}, {9, 0}, {9, 0}, {9, 0}, {9, 0}, {11, 30}, {-1, -1}})
-    list_subjects = append(list_subjects, algebra)
-    map_subjects["algebra"] = algebra
-    calcul := NewSubject("calcul", "Noy",
-                            [7]bool{true, false, true, false, true, true, false},
-                            [7]clock{{10, 0}, {10, 0}, {10, 0}, {10, 0}, {10, 0}, {11, 30}, {-1, -1}},
-                            [7]clock{{11, 0}, {11, 0}, {11, 0}, {11, 0}, {11, 0}, {12, 30}, {-1, -1}})
-    list_subjects = append(list_subjects, calcul)
-    map_subjects["calcul"] = calcul
-    */u1 := NewUser(1000000009, "Max", []string{"algebra", "calcul", "io"})
-    fmt.Println(u1.dni)
-    //fmt.Println(nextLesson(u1))
-    fmt.Println(getInfoUser(u1))
+  map_subjects = make(map[string]subject)
+ var list_subjects []subject
+
+ algebra := NewSubject("algebra", "Casanellas",
+                      [7]lesson{{"algebra", clock{8, 0}, clock{9, 0}},
+                                {"algebra", clock{8, 0}, clock{9, 0}},
+                                {"algebra", clock{8, 0}, clock{9, 0}},
+                                {"algebra", clock{8, 0}, clock{9, 0}},
+                                {"algebra", clock{8, 0}, clock{9, 0}},
+                                {"algebra", clock{11, 0}, clock{11, 30}},
+                                {"algebra", clock{-1, -1}, clock{-1, -1}}})
+ list_subjects = append(list_subjects, algebra)
+ map_subjects["algebra"] = algebra
+ calcul := NewSubject("calcul", "Noy",
+                      [7] lesson {{"calcul", clock{10, 0}, clock{11, 0}},
+                                  {"calcul", clock{-1, -1}, clock{-1, -1}},
+                                  {"calcul", clock{10, 0}, clock{11, 0}},
+                                  {"calcul", clock{-1, -1}, clock{-1, -1}},
+                                  {"calcul", clock{10, 0}, clock{11, 0}},
+                                  {"calcul", clock{11, 30}, clock{12, 30}},
+                                  {"calcul", clock{-1, -1}, clock{-1, -1}}})
+ list_subjects = append(list_subjects, calcul)
+
+ map_subjects["calcul"] = calcul
+ u1 := NewUser(1234, "Max", []string{"algebra", "calcul", "io"})
+ fmt.Println(u1.dni)
+ //fmt.Println(nextLesson(u1))
+ fmt.Println(getInfoUser(u1))
 }
