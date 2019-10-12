@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "time"
+    //"time"
 )
 
 type clock struct {
@@ -12,12 +12,12 @@ type clock struct {
 
 type lesson struct {
     subject         string
-    start_time    clock
+    start_time      clock
     end_time        clock
 }
 
-func min_lesson (l1, l2) lesson {
-    if l1.start_time <= l2.start_time {
+func min_lesson (l1, l2 lesson) lesson {
+    if leq(l1.start_time, l2.start_time) {
         return l1
     }
     return l2
@@ -50,14 +50,14 @@ func geq(a, b clock) bool {
 }
 
 type subject struct {
-    // dni for student 
+    // dni for student
     name string
     teacher string
-    subject_lessons [7] lesson
+    schedule [7] lesson
 }
 
-func NewSubject (name, teacher string, subject_lessons [7] lesson) subject {
-    s := subject {name, teacher, subject_lessons}
+func NewSubject (name, teacher string, schedule [7] lesson) subject {
+    s := subject {name, teacher, schedule}
     return s
 }
 
@@ -66,15 +66,20 @@ var map_subjects map[string]subject
 
 type user struct {
     dni int
+    name string
     subjects [] string
     past_lessons [] lesson
 }
 
-func NewUser (dni int, subjects []string, past_lessons []lesson) user {
-    u := user {dni, subjects, past_lessons}
+func NewUser (dni int, name string, subjects []string, past_lessons []lesson) user {
+    u := user {dni, name, subjects, past_lessons}
     return u
 }
 
+func getInfoUser (u user) (dni int, name string, subjects []string, past_lessons []lesson) {
+  return u.dni, u.name, u.subjects, u.past_lessons
+}
+/*
 func nextLesson(u user) lesson {
     var today = int(time.Now().Weekday()) - 1
     next_lesson := NewLesson("fail", 99, 99)
@@ -113,11 +118,13 @@ func update_past_lessons(u user) user {
     }
     return u
 }
+*/
+
 
 func main() {
     map_subjects = make(map[string]subject)
-    var list_subjects []subject
-    algebra := NewSubject("algebra", "Casanellas",
+  //  var list_subjects []subject
+    /*algebra := NewSubject("algebra", "Casanellas",
                             [7]bool{true, true, true, true, true, true, false},
                             [7]clock{{8, 0}, {8, 0}, {8, 0}, {8, 0}, {8, 0}, {11, 0}, {-1, -1}},
                             [7]clock{{9, 0}, {9, 0}, {9, 0}, {9, 0}, {9, 0}, {11, 30}, {-1, -1}})
@@ -129,7 +136,8 @@ func main() {
                             [7]clock{{11, 0}, {11, 0}, {11, 0}, {11, 0}, {11, 0}, {12, 30}, {-1, -1}})
     list_subjects = append(list_subjects, calcul)
     map_subjects["calcul"] = calcul
-    u1 := NewUser("Max", []string{"algebra", "calcul", "io"}, []lesson{})
+    */u1 := NewUser(1000000009, "Max", []string{"algebra", "calcul", "io"}, []lesson{})
     fmt.Println(u1.dni)
-    fmt.Println(nextLesson(u1))
+    //fmt.Println(nextLesson(u1))
+    fmt.Println(getInfoUser(u1))
 }
