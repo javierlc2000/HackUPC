@@ -1,6 +1,5 @@
 package main
 
-/*
 import (
   //"fmt"
   "time"
@@ -45,18 +44,19 @@ var list_subjects map[string]subject
 type user struct {
   name string
   subjects [] string
+  past_lessons [] lesson
 }
 
-func NewUser (name string, subjects [] string) user {
-  u := user {name, subjects}
+func NewUser (name string, subjects []string, past_lessons []lesson) user {
+  u := user {name, subjects, past_lessons}
   return u
 }
 
-func NextLesson(student user) lesson {
+func nextLesson(u user) lesson {
   var today = int(time.Now().Weekday())
   hour, min, _ := time.Now().Clock()
   var next_subject string
-  for _, name := range student.subjects {
+  for _, name := range u.subjects {
     subject := list_subjects[name]
     if subject.schedule[today] {
       if (subject.end_time[today].hour > hour) || (subject.end_time[today].hour == hour && subject.end_time[today].min >= min) {
@@ -71,7 +71,26 @@ func NextLesson(student user) lesson {
   return ans
 }
 
+// updates past lessons of the current day
+func update_past_lessons(u user) user {
+  var today = int(time.Now().Weekday())
+  hour, min, _ := time.Now().Clock()
+  var last_time clock
+  if len(u.past_lessons) == 0 {
+    last_time = {0, 0}
+  }
+  else {
+    last_lesson = u.past_lessons[len(past_lessons) - 1]
+    last_time = last_lesson.start_time
+  }
+  for _, name := range u.subjects {
+    subject = list_subjects[name]
+    if subject.schedule[today] {
+      if subject.start_time[today] < last_time
+    }
+  }
+}
+
 func main() {
 
 }
-*/
