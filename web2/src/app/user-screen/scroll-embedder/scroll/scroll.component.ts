@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { HTTPLessonService } from '../../httplesson.service';
 
 @Component({
   selector: 'app-scroll',
@@ -6,13 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./scroll.component.scss']
 })
 export class ScrollComponent implements OnInit {
+  @Input() username: string;
+  punts = [0, 0, 0, 0, 0];
+
   ITER = [0, 1, 2, 3, 4];
   cards = ["Algorithms", "Complex analysis", "Linear Optimization", "Parametrized Complexity", "Theory"];
   votes = [5,             5,                    0,                    3,                        5];
   it = 0;
   n = 5;
 
-  constructor() { }
+  constructor(private less: HTTPLessonService) { }
 
   ngOnInit() {
   }
@@ -24,4 +28,18 @@ export class ScrollComponent implements OnInit {
     this.it++;
   }
 
+  pitch(i: number, event: any) {
+    this.punts[i] = event.value;
+  }
+
+  revote(i: number) {
+    this.votes[i] = 0;
+    this.punts[i] = 1;
+    this.less.sendFeedback(this.username, 0, this.cards[i]).subscribe();
+  }
+
+  vote(i: number) {
+    this.less.sendFeedback(this.username, this.punts[i], this.cards[i]).subscribe();
+    this.votes[i] = this.punts[i];
+  }
 }
