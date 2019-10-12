@@ -3,9 +3,10 @@
   <span class="spacer-small"></span>
   <span class="main-title">Grasp</span>
   <span class="spacer"></span>
-  <app-dialog-data-example></app-dialog-data-example>
+  <app-dialog-data-example [username]="username"></app-dialog-data-example>
+  <p>{{ this.username }}</p>
   <span class="spacer-small"></span>
-  <button mat-icon-button aria-label="Exit icon-button">
-      <mat-icon class="icon" aria-hidden="false" aria-label="Exit icon">exit_to_app</mat-icon>
+  <button mat-icon-button aria-label="Exit icon-button" (click)="exitClicked()">
+    <mat-icon class="icon" aria-hidden="false" aria-label="Exit icon">exit_to_app</mat-icon>
   </button>
 </mat-toolbar>
