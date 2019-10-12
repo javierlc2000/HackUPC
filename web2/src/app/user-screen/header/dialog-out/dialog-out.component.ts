@@ -13,10 +13,6 @@ export class DialogOutComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogOutComponentDialog);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
 }
 

@@ -50,6 +50,7 @@ import { DialogOutComponent, DialogOutComponentDialog } from './user-screen/head
   entryComponents: [
     DialogDataExampleComponent,
     DialogDataExampleComponentDialog,
+    DialogOutComponent,
     DialogOutComponentDialog
   ],
 })
