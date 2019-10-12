@@ -14,7 +14,7 @@ import { CentralContainerComponent } from './initial-page/central-container/cent
 import { HeaderComponent } from './initial-page/header/header.component';
 
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule,
+  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatTableModule, MatStepperModule, MatSliderModule,
   MatRadioModule, MatToolbarModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatTabsModule
 } from '@angular/material';
 
@@ -25,6 +25,8 @@ import {
     RegisterBoxComponent,
     CentralContainerComponent,
     HeaderComponent
+    ScrollComponent,
+    ScrollEmbedderComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +42,7 @@ import {
     MatToolbarModule,
     MatInputModule,
     MatDialogModule,
+    MatSliderModule,
     MatTableModule,
     MatMenuModule,
     MatProgressSpinnerModule,
@@ -58,6 +61,7 @@ import {
     MatMenuModule,
     MatIconModule,
     MatProgressSpinnerModule
+    MatSliderModule
   ],
 })
 export class AppModule { }
