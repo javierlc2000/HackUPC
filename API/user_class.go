@@ -220,19 +220,20 @@ var map_users map[string]user
 func performset_feedback(u user, pointsstring string, subject_name string) {
 	points, _ := strconv.Atoi(pointsstring)
 
-
-	today := int(time.Now().Weekday()) - 1
-	for i, x := range u.subjects {
-	    if x == subject_name {
-	        u.feedback[i] = points
-	        for j, y := range map_subjects {
-	            if y.name == subject_name {
-	            	temp := map_subjects[j]
-	            	temp.schedule[today].feedback[points]++
-	                map_subjects[j] = temp
-	            }
-	        }
-	    }
+	today := (int(time.Now().Weekday()) + 6) % 7
+	for _, x := range u.subjects {
+		_subj := map_subjects[x]
+		if _subj.schedule[today].start_time.hour > 0 {
+		    if x == subject_name {
+		    	for j, y := range map_subjects {
+		            if y.name == subject_name {
+		            	temp := map_subjects[j]
+		            	temp.schedule[today].feedback[points]++
+		                map_subjects[j] = temp
+		            }
+		        }
+		    }
+		}
 	}
 }
 
@@ -264,7 +265,7 @@ func getInfoUser (u string) (map[string][]string, bool) {
 
 func performSchedule(u user) []almost_lesson {
     var ans []almost_lesson
-    today := int(time.Now().Weekday()) - 3
+    today := (int(time.Now().Weekday()) + 6) % 7
     for _, name := range u.subjects {
         _subject := map_subjects[name]
         
@@ -286,7 +287,7 @@ func performSchedule(u user) []almost_lesson {
 
 func setfeedback(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
-
+	
 	performset_feedback(map_users[req.Form["username"][0]], req.Form["points"][0], req.Form["subjectName"][0])
 
 	var m map[string]string
@@ -328,6 +329,53 @@ func schedule(w http.ResponseWriter, req *http.Request) {
 	w.Write(value)
 }
 
+/*
+func getaverage (subject_name string) float64{
+	count := 0
+	sum := 0
+
+	for _, v := range map_users {
+		for i, sub := range v.subjects{
+			if sub == subject_name && v.feedback[i] > 0 {
+				sum++
+				count += v.feedback[i]
+			}
+		}
+	}
+
+	den := float64(count)
+	num := float64(sum)
+
+	fmt.Println(den)
+	fmt.Println(num)
+
+	if sum == 0 {
+		return 0
+	} else {
+		return num/den
+	}
+}
+
+
+func average(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+
+	fmt.Println("hellooo")
+
+	result := getaverage(req.Form["subjectName"][0])
+
+	var m map[string]string
+	m  = make(map[string]string)
+
+	m["result"] = strconv.FormatFloat(result, 'f', 6, 64)
+
+	value, _ := json.Marshal(m)
+
+
+
+	w.Header().Set("content-type", "application/json")
+	w.Write(value)
+}*/
 
 func infouser(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
@@ -348,6 +396,7 @@ func SetupHandlers() {
 	http.HandleFunc("/infouser", infouser)
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/register", register)
+	//http.HandleFunc("/average", average)
 	http.ListenAndServe(":8080", nil)
 }
 
