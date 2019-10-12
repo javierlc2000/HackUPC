@@ -21,6 +21,7 @@ import {
 
 import { HttpClientModule } from '@angular/common/http';
 import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './user-screen/header/dialog-data-example/dialog-data-example.component';
+import { DialogOutComponent, DialogOutComponentDialog } from './user-screen/header/dialog-out/dialog-out.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './
     ScrollComponent,
     LoginBoxComponent,
     RegisterBoxComponent,
-    DialogDataExampleComponent, DialogDataExampleComponentDialog
+    DialogDataExampleComponent, DialogDataExampleComponentDialog,
+    DialogOutComponent, DialogOutComponentDialog
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { DialogDataExampleComponent, DialogDataExampleComponentDialog } from './
   bootstrap: [AppComponent],
   entryComponents: [
     DialogDataExampleComponent,
-    DialogDataExampleComponentDialog
+    DialogDataExampleComponentDialog,
+    DialogOutComponentDialog
   ],
 })
 export class AppModule { }
