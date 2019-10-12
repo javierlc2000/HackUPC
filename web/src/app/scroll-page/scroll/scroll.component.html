@@ -1,4 +1,6 @@
-<table style="width:90%">
+
+
+<table style="width:100%">
     <tr>
         <button mat-icon-button position="center" aria-label="Expand less icon-button">
             <mat-icon>expand_less</mat-icon>
@@ -10,12 +12,18 @@
                 <mat-card-title>Previous Class</mat-card-title>
             </mat-card-header>
             <mat-card-actions>
-                <button mat-icon-button position="left" color="primary" aria-label="Star icon-button">
-                    <mat-icon>star</mat-icon> Change your rating
-                </button>
-                <button mat-icon-button position="right" color="primary" aria-label="Person icon-button">
-                    <mat-icon>emoji_people</mat-icon> Volunteer to help your classmates
-                </button>
+                <span class="left-span">
+                    <button mat-icon-button  color="primary" aria-label="Star icon-button">
+                          <mat-icon class="icon-small">star</mat-icon>
+                    </button>
+                    <span class="vertical">Change your rating</span>
+                </span>
+                <span class="right-span">
+                    <button mat-icon-button  color="primary" aria-label="Person icon-button">
+                        <mat-icon class="icon-small">emoji_people</mat-icon>
+                    </button>
+                    <span class="vertical">Volunteer to help your classmates</span>
+                </span>
             </mat-card-actions>
         </mat-card>
     </tr>

@@ -1,14 +1,7 @@
-.mat-card-actions {
-  &[position='top-right'] {
-    position: absolute;
-    top: 0%;
-    left: 90%;
-  }
-  &[position='center'] {
-    position: relative;
-    left: 40%;
-  }
+.vertical {
+  vertical-align: middle;
 }
+
 
 /*
 .bottom-card {
@@ -20,6 +13,25 @@
   transform: translate(-50%,-50%);
 }
 */
+
+.icon {
+  padding: 0 14px;
+}
+
+.icon-small {
+  padding: 0 8px;
+}
+
+.right-span {
+  position: relative;
+  right: -30%;
+}
+
+.left-span {
+  position: relative;
+  right: -1%;
+}
+
 
 .aux-card {
   background-color: rgba(133,151,255,0.4);
@@ -42,6 +54,7 @@
 .mat-slider-horizontal {
   width: 100%;
 }
+
 
 .mat-icon-button {
   &[position='right'] {
