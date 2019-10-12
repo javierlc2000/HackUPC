@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    //"time"
+    "time"
 )
 
 type clock struct {
@@ -68,17 +68,30 @@ type user struct {
     dni int
     name string
     subjects [] string
-    past_lessons [] lesson
 }
 
-func NewUser (dni int, name string, subjects []string, past_lessons []lesson) user {
-    u := user {dni, name, subjects, past_lessons}
+func NewUser (dni int, name string, subjects []string) user {
+    u := user {dni, name, subjects}
     return u
 }
 
-func getInfoUser (u user) (dni int, name string, subjects []string, past_lessons []lesson) {
-  return u.dni, u.name, u.subjects, u.past_lessons
+func getInfoUser (u user) (dni int, name string, subjects []string, lessons []lesson) {
+  return u.dni, u.name, u.subjects, daily_schedule(u)
 }
+
+func daily_schedule(u user) []lesson {
+    var ans []lesson
+    today := int(time.Now().Weekday()) - 1
+    for _, name := range u.subjects {
+        subject := map_subjects[name]
+        x := subject.schedule[today]
+        if x.start_time.hour != -1 {
+            ans = append(ans, x)
+        }
+    }
+    return ans
+}
+
 /*
 func nextLesson(u user) lesson {
     var today = int(time.Now().Weekday()) - 1
@@ -136,7 +149,7 @@ func main() {
                             [7]clock{{11, 0}, {11, 0}, {11, 0}, {11, 0}, {11, 0}, {12, 30}, {-1, -1}})
     list_subjects = append(list_subjects, calcul)
     map_subjects["calcul"] = calcul
-    */u1 := NewUser(1000000009, "Max", []string{"algebra", "calcul", "io"}, []lesson{})
+    */u1 := NewUser(1000000009, "Max", []string{"algebra", "calcul", "io"})
     fmt.Println(u1.dni)
     //fmt.Println(nextLesson(u1))
     fmt.Println(getInfoUser(u1))
