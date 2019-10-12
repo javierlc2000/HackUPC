@@ -4,25 +4,10 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
-	//"io/ioutil"
 	"net/http"
 	"os"
-	//"log"
 )
 
-// type of /login HTTP request
-type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-// type of /register HTTP request
-type RegisterRequest struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
 
 // given a file (named fileName) and a text, inserts the text in the file with end of line
 func add(fileName, text string) error {
@@ -38,7 +23,7 @@ func add(fileName, text string) error {
 }
 
 func performRegister(name, email, username, password string) (bool, error) {
-	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	fileUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
@@ -52,34 +37,34 @@ func performRegister(name, email, username, password string) (bool, error) {
 	}
 
 	//add all the information
-	err = add("data/usernames.txt", username)
+	err = add("usernames.txt", username)
 	if err != nil {
 		return false, err
 	}
-	err = add("data/names.txt", name)
+	err = add("names.txt", name)
 	if err != nil {
 		return false, err
 	}
-	err = add("data/passwords.txt", password)
+	err = add("passwords.txt", password)
 	if err != nil {
 		return false, err
 	}
-	err = add("data/emails.txt", email)
+	err = add("emails.txt", email)
 	if err != nil {
 		return false, err
 	}
 
-	return true, nil
+	return true, errors.New("Everything okay :)")
 }
 
 func performLogin(username, password string) (bool, error) {
-	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	fileUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
 	defer fileUsernames.Close()
 
-	filePasswords, err := os.OpenFile("data/passwords.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filePasswords, err := os.OpenFile("passwords.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
@@ -90,10 +75,15 @@ func performLogin(username, password string) (bool, error) {
 	scannerPasswords := bufio.NewScanner(filePasswords)
 
 	for scannerUsernames.Scan() {
-		password := scannerPasswords.Text()
+		scannerPasswords.Scan()
+		key := scannerPasswords.Text()
 
 		if scannerUsernames.Text() == username {
-			return password == password, nil
+			if key == password{
+				return true, errors.New("Everything okay :)")
+			} else {
+				return false, errors.New("Incorrect password")
+			}
 		}
 	}
 
@@ -117,6 +107,7 @@ func register(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
 	succ, err := performRegister(req.Form["name"][0], req.Form["email"][0], req.Form["username"][0], req.Form["password"][0])
+
 	value, _ := json.Marshal(map[string]interface{}{
 		"success": succ,
 		"error":   err.Error(),
@@ -136,3 +127,4 @@ func SetupHandlers() {
 func main() {
 	SetupHandlers()
 }
+
