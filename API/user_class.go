@@ -484,7 +484,7 @@ func init_everything () error {
 	}
 	defer filesSchedules.Close()
 
-	ScannerSchedules := bufio.NewScanner(filesSchedules)
+	ScannerSchedules := bufio.NewScanner(filesSchedules) 
 	
 	for ScannerSchedules.Scan() { // cheks that the username is not taken
 		_assignment := ScannerSchedules.Text()
