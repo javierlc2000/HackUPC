@@ -15,6 +15,7 @@ export class DialogDataExampleComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogDataExampleComponentDialog, {
+        width:'600px',
         data: { username: this.username }
     });
 
@@ -31,8 +32,8 @@ export class DialogDataExampleComponent {
 export class DialogDataExampleComponentDialog implements OnInit {
   name: string;
   email: string;
-  subject: string[];
-  feedback: number[];
+  subjects: string[];
+  feedbacks: number[];
 
   constructor(
     public dialogRef: MatDialogRef<DialogDataExampleComponentDialog>,
@@ -45,8 +46,8 @@ export class DialogDataExampleComponentDialog implements OnInit {
       .subscribe(dt => {
         _this.name = dt.name;
         _this.email = dt.email;
-        _this.subject = dt.subject;
-        _this.feedback = dt.feedback;
+        _this.subjects = dt.subjects;
+        _this.feedbacks = dt.feedbacks;
       });
     }
 }

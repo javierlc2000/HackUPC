@@ -12,8 +12,8 @@ export interface InfoUserResponse {
   username: string;
   name: string;
   email: string;
-  subject: string[];
-  feedback: number[];
+  subjects: string[];
+  feedbacks: number[];
 }
 
 export interface FeedbackResponse {
@@ -44,7 +44,7 @@ export class HTTPLessonService {
 
   sendFeedback(_username: string, _punt: number, _assig: string): Observable<FeedbackResponse> {
     var _points = _punt as any as string;
-    return this.http.get<FeedbackResponse>('http://localhost:8080/setfeedback', {
+    return this.http.get<FeedbackResponse>('http://localhost:8080/sendfeedback', {
       params: {
         username: _username,
         points: _points,
