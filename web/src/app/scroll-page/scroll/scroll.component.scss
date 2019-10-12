@@ -50,4 +50,8 @@
       position: relative;
       left: 3%;
   }
+  &[position='center'] {
+      position: relative;
+      left: 50%;
+  }
 }
