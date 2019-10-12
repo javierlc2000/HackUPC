@@ -1,0 +1,44 @@
+<table style="width:90%">
+    <tr>
+        <mat-card class="aux-card top">
+            <mat-card-header>
+                <mat-card-title >Super Previous Class</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+                <button mat-icon-button position="left" color="accent" aria-label="Star icon-button">
+                    <mat-icon>star</mat-icon> Change your rating
+                </button>
+                <button mat-icon-button position="right" color="accent" aria-label="Person icon-button">
+                    <mat-icon>emoji_people</mat-icon> Volunteer to help your classmates
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </tr>
+
+    <tr>
+        <mat-card class="middle-card">
+            <mat-card-header>
+                <mat-card-title>Previous Class</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions position="top-right">
+
+                <button mat-icon-button color="accent" aria-label="Cross icon-button">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+            </mat-card-actions>
+            <mat-slider
+              class="card-slider"
+              max="10"
+              min="0"
+              thumbLabel
+            ></mat-slider>
+        </mat-card>
+    </tr>
+    <tr>
+        <mat-card class="aux-card">
+            <mat-card-header>
+                <mat-card-title>Current Class</mat-card-title>
+            </mat-card-header>
+        </mat-card>
+    </tr>
+</table>
