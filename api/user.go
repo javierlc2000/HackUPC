@@ -79,10 +79,10 @@ func nextLesson(u user) lesson {
     if ok {
       if subject.schedule[today] {
         if (geq(&subject.end_time[today], &current_time)) {
-             if(leq(&subject.start_time[today], &min_time)) {
-               min_time = subject.start_time[today]
-               next_subject = subject.name
-             }
+           if(leq(&subject.start_time[today], &min_time)) {
+             min_time = subject.start_time[today]
+             next_subject = subject.name
+           }
         }
       }
     }
@@ -96,24 +96,22 @@ func nextLesson(u user) lesson {
 }
 
 // updates past lessons of the current day
-/*func update_past_lessons(u user) user {
+func update_past_lessons(u user) user {
   var today = int(time.Now().Weekday())-1
   hour, min, _ := time.Now().Clock()
-  var last_time clock
-  if len(u.past_lessons) == 0 {
-    last_time = {0, 0}
-  }
-  else {
-    last_lesson = u.past_lessons[len(past_lessons) - 1]
-    last_time = last_lesson.start_time
-  }
+  current_time := NewClock(hour, min)
+  u.past_lessons = nil
   for _, name := range u.subjects {
-    subject, ok = list_subjects[name]
+    subject, ok := map_subjects[name]
     if ok && subject.schedule[today] {
-      if(leq)
+      if leq(&subject.end_time[today], &current_time) {
+        l := NewLesson(subject.name, subject.start_time[today], subject.end_time[today])
+        u.past_lessons = append(u.past_lessons, l)
+      }
     }
   }
-}*/
+  return u
+}
 
 func main() {
   map_subjects = make(map[string]subject)
