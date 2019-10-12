@@ -15,6 +15,7 @@ type lesson struct {
     subject         string
     start_time      clock
     end_time        clock
+    feedback        [11]int
 }
 
 func min_lesson (l1, l2 lesson) lesson {
@@ -25,7 +26,11 @@ func min_lesson (l1, l2 lesson) lesson {
 }
 
 func NewLesson (subject string, start_time, end_time clock) lesson {
-    l := lesson {subject, start_time, end_time}
+    var feedback [11]int
+    for i := range feedback {
+      feedback[i] = 0
+    }
+    l := lesson {subject, start_time, end_time, feedback}
     return l
 }
 
@@ -69,15 +74,21 @@ type user struct {
     dni int
     name string
     subjects [] string
+    feedback [] int
 }
 
 func NewUser (dni int, name string, subjects []string) user {
-    u := user {dni, name, subjects}
+    n := len(subjects)
+    var feedback [] int
+    for i := 0; i < n; i++ {
+      feedback = append(feedback, -1)
+    }
+    u := user {dni, name, subjects, feedback}
     return u
 }
 
-func getInfoUser (u user) (dni int, name string, subjects []string, lessons []lesson) {
-  return u.dni, u.name, u.subjects, daily_schedule(u)
+func getInfoUser (u user) (dni int, name string, subjects []string, lessons []lesson, feedback []int) {
+  return u.dni, u.name, u.subjects, daily_schedule(u), u.feedback
 }
 
 func daily_schedule(u user) []lesson {
@@ -96,6 +107,20 @@ func daily_schedule(u user) []lesson {
         return less(x, y)
         })
     return ans
+}
+
+func set_feedback(u user, points int, subject_name string) {
+      today := int(time.Now().Weekday()) - 1
+      for i, x := range u.subjects {
+          if x == subject_name {
+              u.feedback[i] = points
+              for j, y := range list_subjects {
+                  if y.name == subject_name {
+                      list_subjects[j].schedule[today].feedback[points]++
+                  }
+              }
+          }
+      }
 }
 
 /*
@@ -125,10 +150,11 @@ func update_past_lessons(u user) user {
     hour, min, _ := time.Now().Clock()
     current_time := NewClock(hour, min)
 
+ && subject.sche
     u.past_lessons = nil
     for _, name := range u.subjects {
         subject, ok := map_subjects[name]
-        if ok && subject.schedule[today] {
+        if okdule[today] {
             if leq(subject.end_time[today], current_time) {
                 l := NewLesson(subject.name, subject.start_time[today], subject.end_time[today])
                 u.past_lessons = append(u.past_lessons, l)
@@ -139,29 +165,30 @@ func update_past_lessons(u user) user {
 }
 */
 
+var list_subjects []subject
 
 func main() {
   map_subjects = make(map[string]subject)
- var list_subjects []subject
+
 
  algebra := NewSubject("algebra", "Casanellas",
-                      [7]lesson{{"algebra", clock{8, 0}, clock{9, 0}},
-                                {"algebra", clock{8, 0}, clock{9, 0}},
-                                {"algebra", clock{8, 0}, clock{9, 0}},
-                                {"algebra", clock{8, 0}, clock{9, 0}},
-                                {"algebra", clock{8, 0}, clock{9, 0}},
-                                {"algebra", clock{11, 0}, clock{11, 30}},
-                                {"algebra", clock{-1, -1}, clock{-1, -1}}})
+                      [7]lesson{NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0}),
+                                NewLesson("algebra", clock{8, 0}, clock{9, 0})})
  list_subjects = append(list_subjects, algebra)
  map_subjects["algebra"] = algebra
  calcul := NewSubject("calcul", "Noy",
-                      [7] lesson {{"calcul", clock{10, 0}, clock{11, 0}},
-                                  {"calcul", clock{-1, -1}, clock{-1, -1}},
-                                  {"calcul", clock{10, 0}, clock{11, 0}},
-                                  {"calcul", clock{-1, -1}, clock{-1, -1}},
-                                  {"calcul", clock{10, 0}, clock{11, 0}},
-                                  {"calcul", clock{11, 30}, clock{12, 30}},
-                                  {"calcul", clock{-1, -1}, clock{-1, -1}}})
+                      [7] lesson {NewLesson("calcul", clock{10, 0}, clock{11, 0}),
+                                  NewLesson("calcul", clock{-1, -1}, clock{-1, -1}),
+                                  NewLesson("calcul", clock{10, 0}, clock{11, 0}),
+                                  NewLesson("calcul", clock{-1, -1}, clock{-1, -1}),
+                                  NewLesson("calcul", clock{10, 0}, clock{11, 0}),
+                                  NewLesson("calcul", clock{11, 30}, clock{12, 30}),
+                                  NewLesson("calcul", clock{-1, -1}, clock{-1, -1})})
  list_subjects = append(list_subjects, calcul)
 
  map_subjects["calcul"] = calcul
@@ -169,4 +196,7 @@ func main() {
  fmt.Println(u1.dni)
  //fmt.Println(nextLesson(u1))
  fmt.Println(getInfoUser(u1))
+ set_feedback(u1, 7, "calcul")
+ set_feedback(u1, 9, "algebra")
+ fmt.Println("feedback user: ", u1.feedback, " \nfeedback lesson: ", list_subjects)
 }
