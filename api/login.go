@@ -98,6 +98,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 		"error":   err.Error(),
 	})
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
@@ -112,6 +113,7 @@ func register(w http.ResponseWriter, req *http.Request) {
 		"error":   err.Error(),
 	})
 
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.Header().Set("content-type", "application/json")
 	w.Write(value)
 }
