@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"net/http"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func sampleEnpoint(w http.ResponseWriter, req *http.Request) {
@@ -25,4 +27,5 @@ func SetupHandlers() {
 
 func main() {
 	SetupHandlers()
+
 }
