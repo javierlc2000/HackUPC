@@ -1,107 +1,78 @@
-Statistics and Probability II
-0
-9
-0
+BD
+1
 10
 0
-Statistics and Probability II
+11
+0
+PIE2
+2
+10
+0
+11
+0
+A
 3
-9
-0
 10
 0
-Statistics and Probability II
+11
+0
+CA1
 4
 10
 0
-12
+11
 0
-Information Theory
-0
+SIS
+5
 10
 0
-12
+11
 0
-Information Theory
+CI
+1
+11
+0
+12
+30
+PRO2
 2
-9
+11
 0
-10
-0
-Information Theory
-3
 12
 0
+PM
+3
+11
+0
+12
+30
+AP3
+4
+11
+0
+12
+0
+TEOI
+5
+11
+0
+12
+0
+CA2
+1
 13
 0
-Algorithmics and Programming III
-0
-12
+14
+30
+Physics
+2
+13
 0
 14
 0
-Algorithmics and Programming III
-2
-10
-0
-12
-0
-Databases
-1
-9
-0
-12
-0
-Databases
-4
-9
-0
-10
-0
-Signals and Systems
-1
-12
-0
+MAG
+3
 13
 0
-Signals and Systems
-3
-10
-0
-12
-Signals and Systems
-4
-12
-0
-13
-0
-Integral Calculus
-0
-8
-0
-9
-0
-Integral Calculus
-1
-8
-0
-9
-0
-Integral Calculus
-2
-8
-0
-9
-0
-Integral Calculus
-3
-8
-0
-9
-0
-Integral Calculus
-4
-8
-0
-9
+14
 0
