@@ -8,7 +8,6 @@ import (
 	"os"
 )
 
-
 // given a file (named fileName) and a text, inserts the text in the file with end of line
 func add(fileName, text string) error {
 	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
@@ -23,7 +22,7 @@ func add(fileName, text string) error {
 }
 
 func performRegister(name, email, username, password string) (bool, error) {
-	fileUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
@@ -37,19 +36,19 @@ func performRegister(name, email, username, password string) (bool, error) {
 	}
 
 	//add all the information
-	err = add("usernames.txt", username)
+	err = add("data/usernames.txt", username)
 	if err != nil {
 		return false, err
 	}
-	err = add("names.txt", name)
+	err = add("data/names.txt", name)
 	if err != nil {
 		return false, err
 	}
-	err = add("passwords.txt", password)
+	err = add("data/passwords.txt", password)
 	if err != nil {
 		return false, err
 	}
-	err = add("emails.txt", email)
+	err = add("data/emails.txt", email)
 	if err != nil {
 		return false, err
 	}
@@ -58,13 +57,13 @@ func performRegister(name, email, username, password string) (bool, error) {
 }
 
 func performLogin(username, password string) (bool, error) {
-	fileUsernames, err := os.OpenFile("usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	fileUsernames, err := os.OpenFile("data/usernames.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
 	defer fileUsernames.Close()
 
-	filePasswords, err := os.OpenFile("passwords.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	filePasswords, err := os.OpenFile("data/passwords.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return false, err
 	}
@@ -79,7 +78,7 @@ func performLogin(username, password string) (bool, error) {
 		key := scannerPasswords.Text()
 
 		if scannerUsernames.Text() == username {
-			if key == password{
+			if key == password {
 				return true, errors.New("Everything okay :)")
 			} else {
 				return false, errors.New("Incorrect password")
@@ -127,4 +126,3 @@ func SetupHandlers() {
 func main() {
 	SetupHandlers()
 }
-
