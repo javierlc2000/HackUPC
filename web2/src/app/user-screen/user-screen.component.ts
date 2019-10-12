@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-user-screen',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-screen.component.scss']
 })
 export class UserScreenComponent implements OnInit {
+  username = "";
 
-  constructor() { }
+  constructor(private actRoute: ActivatedRoute) {}
 
   ngOnInit() {
+    this.username = this.actRoute.snapshot.paramMap.get("username");
+    console.log(this.username);
   }
-
 }
