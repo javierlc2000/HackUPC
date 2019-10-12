@@ -34,7 +34,7 @@ export class LoginBoxComponent implements OnInit {
     .subscribe(
       data => {
         if (data.success) {
-          _this.router.navigateByUrl("/user");
+          _this.router.navigateByUrl("/user/" + _username);
         }
         else {
           _this.errMsg = true;

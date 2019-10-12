@@ -45,7 +45,7 @@ export class RegisterBoxComponent implements OnInit {
     .subscribe({
       next(data: SuccessMessage) {
         if (data.success) {
-          _this.router.navigateByUrl("/user");
+          _this.router.navigateByUrl("/user/" + _username);
         }
       }
     });

@@ -5,7 +5,7 @@ import {UserScreenComponent} from "./user-screen/user-screen.component";
 
 const routes: Routes = [
   {path: '', component: InitScreenComponent},
-  {path: 'user', component: UserScreenComponent}
+  {path: 'user/:username', component: UserScreenComponent}
 ];
 
 @NgModule({
