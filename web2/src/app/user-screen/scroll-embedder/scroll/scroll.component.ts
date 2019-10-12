@@ -19,6 +19,15 @@ export class ScrollComponent implements OnInit {
   constructor(private less: HTTPLessonService) { }
 
   ngOnInit() {
+    var _this = this;
+    this.less.infoUser(this.username).subscribe(data => {
+      _this.n = data.subject.length;
+      _this.cards = data.subject;
+      _this.votes = data.feedback;
+    });
+    this.it = 0;
+    this.ITER = Array.from(Array(this.n).keys());
+    this.punts = Array(this.n);
   }
 
   expandLess() {
