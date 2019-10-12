@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register-box',
@@ -12,7 +13,8 @@ export class RegisterBoxComponent implements OnInit {
   usernameGroup: FormGroup;
   passwordGroup: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(private _formBuilder: FormBuilder,
+    private http: HttpClient) {}
 
   ngOnInit() {
     this.nameGroup = this._formBuilder.group({
@@ -30,6 +32,18 @@ export class RegisterBoxComponent implements OnInit {
   }
 
   register() {
+    const _name = this.nameGroup.get("name").value;
+    const _email = this.emailGroup.get("email").value;
+    const _username = this.usernameGroup.get("username").value;
+    const _password = this.passwordGroup.get("password").value;
     
+    this.http.get('http://localhost:8080/register', {
+      params: {
+        name: _name,
+        email: _email,
+        username: _username,
+        password: _password,
+      }
+    }).subscribe();
   }
 }
