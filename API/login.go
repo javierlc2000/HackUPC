@@ -4,9 +4,10 @@ import (
 	"bufio"
 	"encoding/json"
 	"errors"
-	"io/ioutil"
+	//"io/ioutil"
 	"net/http"
 	"os"
+	//"log"
 )
 
 // type of /login HTTP request
@@ -102,7 +103,7 @@ func performLogin(username, password string) (bool, error) {
 func login(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	succ, err := performLogin(req.Form["username"], req.Form["password"])
+	succ, err := performLogin(req.Form["username"][0], req.Form["password"][0])
 	value, _ := json.Marshal(map[string]interface{}{
 		"success": succ,
 		"error":   err.Error(),
@@ -115,7 +116,7 @@ func login(w http.ResponseWriter, req *http.Request) {
 func register(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 
-	succ, err := performLogin(req.Form["name"], req.Form["email"], req.Form["username"], req.Form["password"])
+	succ, err := performRegister(req.Form["name"][0], req.Form["email"][0], req.Form["username"][0], req.Form["password"][0])
 	value, _ := json.Marshal(map[string]interface{}{
 		"success": succ,
 		"error":   err.Error(),
