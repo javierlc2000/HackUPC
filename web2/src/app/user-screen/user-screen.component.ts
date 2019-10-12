@@ -13,6 +13,5 @@ export class UserScreenComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.actRoute.snapshot.paramMap.get("username");
-    console.log(this.username);
   }
 }
