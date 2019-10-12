@@ -24,7 +24,7 @@ import {
     LoginBoxComponent,
     RegisterBoxComponent,
     CentralContainerComponent,
-    HeaderComponent
+    HeaderComponent,
     ScrollComponent,
     ScrollEmbedderComponent
   ],
@@ -60,7 +60,7 @@ import {
     MatTableModule,
     MatMenuModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
     MatSliderModule
   ],
 })
