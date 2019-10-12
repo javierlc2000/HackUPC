@@ -5,11 +5,11 @@ import (
     "time"
     "sort"
     "bufio"
-	"encoding/json"
-	"errors"
-	"net/http"
-	"os"
-	"strconv"
+	  "encoding/json"
+	  "errors"
+	  "net/http"
+	  "os"
+	  "strconv"
 )
 
 
@@ -264,10 +264,10 @@ func getInfoUser (u string) (map[string][]string, bool) {
 
 func performSchedule(u user) []almost_lesson {
     var ans []almost_lesson
-    today := int(time.Now().Weekday()) - 3
+    today := int(time.Now().Weekday()) - 1  //-5
     for _, name := range u.subjects {
         _subject := map_subjects[name]
-        
+
         x := _subject.schedule[today]
         if x.start_time.hour > 0 {
             ans = append(ans, Newalmost_Lesson(x))
@@ -307,7 +307,7 @@ func schedule(w http.ResponseWriter, req *http.Request) {
 	var _subject []string
 	var _start_time []string
 	var _end_time []string
-	 
+
 	for _, val := range result {
 		_subject = append(_subject, val.subject)
 		_start_time = append(_start_time, strconv.Itoa(val.start_time.hour) + ":" + strconv.Itoa(val.start_time.min))
@@ -385,13 +385,13 @@ func init_everything () error {
 		_username := ScannerUsernames.Text()
 		_name := ScannerNames.Text()
 		_email := ScannerEmails.Text()
-		
+
 
 		var _empty []string
 		map_users[_username] = NewUser(_username, _name, _email, _empty)
 	}
 
-	
+
 	filesAssignments, err := os.OpenFile("data/Assignments.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
@@ -399,7 +399,7 @@ func init_everything () error {
 	defer filesAssignments.Close()
 
 	ScannerAssignments := bufio.NewScanner(filesAssignments)
-	
+
 	for ScannerAssignments.Scan() { // cheks that the username is not taken
 		_username := ScannerAssignments.Text()
 		ScannerAssignments.Scan()
@@ -418,17 +418,17 @@ func init_everything () error {
 	defer filesSubject.Close()
 
 	ScannerSubject := bufio.NewScanner(filesSubject)
-	
+
 	for ScannerSubject.Scan() { // cheks that the username is not taken
 		_assignment := ScannerSubject.Text()
 		ScannerSubject.Scan()
 		_teacher := ScannerSubject.Text()
-		
+
 		var _empty [7]lesson
 		map_subjects[_assignment] = NewSubject(_assignment, _teacher, _empty)
 	}
 
-	
+
 	filesSchedules, err := os.OpenFile("data/schedule.txt", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		return err
@@ -436,7 +436,7 @@ func init_everything () error {
 	defer filesSchedules.Close()
 
 	ScannerSchedules := bufio.NewScanner(filesSchedules)
-	
+
 	for ScannerSchedules.Scan() { // cheks that the username is not taken
 		_assignment := ScannerSchedules.Text()
 		ScannerSchedules.Scan()
@@ -451,19 +451,19 @@ func init_everything () error {
 		_endm := ScannerSchedules.Text()
 
 		temp_subject := map_subjects[_assignment]
-		
-		int_starth, _ := strconv.Atoi(_starth) 
-		int_startm, _ := strconv.Atoi(_startm) 
-		int_endh, _ := strconv.Atoi(_endh) 
-		int_endm, _ := strconv.Atoi(_endm) 
-		int_day, _ := strconv.Atoi(_day) 
+
+		int_starth, _ := strconv.Atoi(_starth)
+		int_startm, _ := strconv.Atoi(_startm)
+		int_endh, _ := strconv.Atoi(_endh)
+		int_endm, _ := strconv.Atoi(_endm)
+		int_day, _ := strconv.Atoi(_day)
 
 		tmp_less := NewLesson(_assignment, NewClock(int_starth, int_startm), NewClock(int_endh, int_endm))
 
 		temp_subject.schedule[int_day] = tmp_less
-		map_subjects[_assignment] = temp_subject		
+		map_subjects[_assignment] = temp_subject
 	}
-	
+
 
 	return errors.New("Everything okay :)")
 }
@@ -474,4 +474,3 @@ func main() {
 	init_everything()
 	SetupHandlers()
 }
-
