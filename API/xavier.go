@@ -221,16 +221,15 @@ func performset_feedback(u user, pointsstring string, subject_name string) {
 	points, _ := strconv.Atoi(pointsstring)
 
 	today := (int(time.Now().Weekday()) + 6) % 7
-	//today = 3
+	today = 3
 
 	for i, x := range u.subjects {
 		_subj := map_subjects[x]
 		//fmt.Println("subj, ", _subj)
 		if _subj.schedule[today].start_time.hour > 0 {
-			u.feedback[i] = points
 			//fmt.Println("now u , ", u)
-
 		    if x == subject_name {
+		    	u.feedback[i] = points
 		    	for j, y := range map_subjects {
 		            if y.name == subject_name {
 		            	temp := map_subjects[j]
@@ -294,7 +293,7 @@ func performSchedule(u user) []almost_lesson {
 func setfeedback(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm()
 	
-	performset_feedback(map_users[req.Form["username"][0]], req.Form["points"][0], req.Form["subjectName"][0])
+	performset_feedback(map_users[req.Form["username"][0]], req.Form["point"][0], req.Form["subjectName"][0])
 
 	var m map[string]string
 	m  = make(map[string]string)
@@ -530,3 +529,4 @@ func main() {
 
 	SetupHandlers()
 }
+
