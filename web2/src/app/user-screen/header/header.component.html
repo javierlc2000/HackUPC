@@ -3,8 +3,13 @@
   <span class="spacer-small"></span>
   <span class="main-title">Grasp</span>
   <span class="spacer"></span>
-  <button mat-icon-button aria-label="Feedback icon-button" (click)="feedbackClicked()">
-    <mat-icon class="icon" aria-hidden="false" aria-label="Feedback icon">question_answer</mat-icon>
+  <span class="spacer-small"></span>
+  <button mat-icon-button (click)="communityClicked()">
+    <mat-icon class="icon">question_answer</mat-icon>
+  </button>
+  <span class="spacer-small"></span>
+  <button mat-icon-button (click)="feedbackClicked()">
+    <mat-icon class="icon">poll</mat-icon>
   </button>
   <span class="spacer-small"></span>
   <app-dialog-data-example [username]="username"></app-dialog-data-example>
