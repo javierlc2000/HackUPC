@@ -2,19 +2,20 @@
     width: 80%;
     position: absolute;
     left: 50%;
-    top: 60%;
+    top: 50%;
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
 }
-
-div p {
-    size: 20px;
-    margin: 4%;
-    color: primary;
-    text-align: center;
-}
-div {
-    width: 100%;
-    position: absolute;
-}
   
+
+h1 {
+    color: primary;
+    text-align:center;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+app-scroll {
+    margin-top:40px;
+
+}
